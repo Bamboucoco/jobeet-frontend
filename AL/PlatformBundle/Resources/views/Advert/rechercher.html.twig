@@ -1,0 +1,62 @@
+{# src/AL/PlatformBundle/Resources/views/Advert/indexRechercher.html.twig
+Page dédié à l'affichage de toutes les annonces avce mot clé recherché
+Le mot clé est donné à partir formulaire "rechercher" de la page index2.html.twig
+#}
+
+{%  extends "ALPlatformBundle::layout.html.twig" %}
+
+{%  block title %}
+    Accueil - {{ parent() }}
+{%  endblock %}
+
+{%  block alplatform_body %}
+
+{# Initialisation de variabe pour gérer affichage 1 tableau par catégorie#}
+
+    <p><b>RECHERCHE PAR MOT CLE</b> (mot clé : {{ motcle }} , nb annonces touvées : {{ test }} ).</p>
+    <hr>
+    {# RECHERCHER : Champ pour effectuer une recherche avec mot clé
+   Formulaire envoyer au controlleur rechercher#}
+    <form name="rechercher" method="post" action="rechercher">
+        <input type="text" maxlength="50" name="motcle" id="motcle">
+        <input type="submit" name="valider" value="Rechercher">
+    </form>
+    {% set titre_cat=' ' %}
+    {% set fin_tab='0' %}
+
+    {%  for advert in listAdverts %}
+        {%  if titre_cat!=advert[1] %}
+
+            {% set titre_cat=advert[1] %}
+            {% if fin_tab=='0' %}
+                {% set fin_tab='1' %}
+            {%  else %}
+                </table>
+            {% endif %}
+            <br><a href="{{ path('al_platform_cat', {'cat':advert[1]}) }}"> {{ advert[1] }}</a>
+            <hr>
+            <table>
+            <Tr>
+                <th>LOCATION</th><th>POSITION</th><th>COMPANY</th> <th>Réf.</th><th>Date</th>
+            </Tr>
+        {% endif %}
+        <tr>
+            <td width="150px" >{{  advert[3] }}</td>
+            <td width="150px">{{  advert[4] }}</td>
+            <td width="100px">{{  advert[5] }}</td>
+            <td width="50px">
+                <a href="{{  path('al_platform_view', {'id':advert[0]}) }}"> {{ advert[0] }}</a>
+            </td>
+            <td width="100px">{{ advert[8]|date ('d/m/Y') }}</td>
+        </tr>
+    {%  else %}
+        <li>Pas d'annonces pour le moment</li>
+    {%  endfor %}
+
+    </Table>
+
+    <p>
+        <a href="{{ path('al_platform_home') }}" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Retour liste</a>
+
+    </p>
+{%  endblock %}

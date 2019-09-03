@@ -1,0 +1,42 @@
+{# src/AL/PlatformBundle/Resources/views/Advert/indexCat.html.twig
+Page dédié à l'affichage de toutes les annonces d'une catégorie
+La catgéorie est sélectionnée à partir de la page index.html.twig (qui affiche sélection des 3 dernières annonces
+regroupées par catégorie
+#}
+
+{%  extends "ALPlatformBundle::layout.html.twig" %}
+
+{%  block title %}
+    Accueil - {{ parent() }}
+{%  endblock %}
+
+{%  block alplatform_body %}
+
+{# Initialisation de variabe pour gérer affichage 1 tableau par catégorie#}
+
+    <p><b>Les emplois de la catégorie : {{ listAdverts[0][1] }}</b></p>
+    <hr>
+    <table>
+    <Tr>
+        <th>LOCATION</th><th>POSITION</th><th>COMPANY</th> <th>Réf.</th><th>Date</th>
+    </Tr>
+    {%  for advert in listAdverts %}
+            <tr>
+                <td width="150px" >{{  advert[3] }}</td>
+                <td width="150px">{{  advert[4] }}</td>
+                <td width="100px">{{  advert[5] }}</td>
+                <td width="50px">
+                    <a href="{{  path('al_platform_view', {'id':advert[0]}) }}"> {{ advert[0] }}</a>
+                </td>
+                <td width="100px">{{ advert[8]|date ('d/m/Y') }}</td>
+            </tr>
+    {%  else %}
+        <tr><td colspan="5" >Pas d'annonces pour le moment</td></tr>
+    {%  endfor %}
+
+    </Table>
+    <p>
+        <a href="{{ path('al_platform_home') }}" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Retour liste</a>
+
+    </p>
+{%  endblock %}

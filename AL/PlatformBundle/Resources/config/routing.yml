@@ -1,0 +1,36 @@
+
+al_platform_home:
+    path: /{page}
+    defaults:
+        _controller: ALPlatformBundle:Advert:index
+        page: 1
+    requirements:
+        page: \d*
+
+al_platform_rechercher:
+    path: /rechercher
+    defaults:
+        _controller: ALPlatformBundle:Advert:rechercher
+        page: 1
+    requirements:
+        page: \d*
+        _method: POST
+
+al_platform_cat:
+    path: /{cat}
+    defaults:
+        _controller: ALPlatformBundle:Advert:indexCat
+    requirements:
+        id: \d+
+
+
+al_platform_view:
+    path: /advert/{id}
+    defaults:
+        _controller: ALPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+
+
+
+

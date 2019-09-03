@@ -1,0 +1,24 @@
+{# src/AL/PlatformBundle/ressources/view/Advert/view.html.twig
+Affiche détail d'une annonce à partir de la sélection de son identifiant
+#}
+{% extends "ALPlatformBundle::layout.html.twig" %}
+    {%  block title %}
+    Lecture d'une annonce - {{  parent() }}
+    {% endblock %}
+{%  block alplatform_body %}
+
+<h2>{{  advert[2] }}</h2>
+<i>Par {{ advert[6] }}, le {{  advert[8]|date('d/m/Y') }}, référence annonce : {{ advert[0] }}, catégorie : {{ advert[1] }}</i>
+<div class="well">
+    {{ advert[7] }}
+</div>
+<div class="well">
+    Région : {{ advert[3] }}<br>
+    Métier : {{ advert[4]}}<br>
+    Entreprise :{{ advert[5] }}
+</div>
+<p>
+    <a href="{{ path('al_platform_home') }}" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Retour liste</a>
+
+</p>
+{%  endblock %}

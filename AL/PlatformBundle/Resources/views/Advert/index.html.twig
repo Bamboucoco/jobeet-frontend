@@ -1,0 +1,57 @@
+{# src/AL/PlatformBundle/Resources/views/Advert/index.html.twig
+ACCUEIL : page d'accueil pour afficher les annonces,
+ANNONCES EMPLOIS regroupées par catégorie et limitées à 3 annonces pas catégorie (depuis le controlleur)
+triées par date
+#}
+
+{%  extends "ALPlatformBundle::layout.html.twig" %}
+
+{%  block title %}
+    Accueil - {{ parent() }}
+{%  endblock %}
+
+{%  block alplatform_body %}
+
+    {# RECHERCHER : Champ pour effectuer une recherche avec mot clé
+   Formulaire envoyer au controlleur rechercher#}
+    <form name="rechercher" method="post" action="platform/rechercher">
+        <input type="text" maxlength="50" name="motcle" id="motcle">
+        <input type="submit" name="valider" value="Rechercher">
+    </form>
+
+{# Initialisation de variabe pour gérer affichage 1 tableau par catégorie#}
+    {% set titre_cat=' ' %}
+    {% set fin_tab='0' %}
+
+    {%  for advert in listAdverts %}
+    {%  if titre_cat!=advert[1] %}
+
+            {% set titre_cat=advert[1] %}
+            {% if fin_tab=='0' %}
+                {% set fin_tab='1' %}
+            {%  else %}
+                 </table>
+            {% endif %}
+
+            <br><a href="{{ path('al_platform_cat', {'cat':advert[1]}) }}"> {{ advert[1] }}</a>
+            <hr>
+            <table>
+            <Tr>
+               <th>LOCATION</th><th>POSITION</th><th>COMPANY</th> <th>Réf.</th><th>Date</th>
+            </Tr>
+        {% endif %}
+            <tr>
+                <td width="150px" >{{  advert[3] }}</td>
+                <td width="150px">{{  advert[4] }}</td>
+                <td width="100px">{{  advert[5] }}</td>
+                <td width="50px">
+                    <a href="{{  path('al_platform_view', {'id':advert[0]}) }}"> {{ advert[0] }}</a>
+                </td>
+                <td width="100px">{{ advert[8]|date ('d/m/Y') }}</td>
+            </tr>
+    {%  else %}
+        <li>Pas d'annonces pour le moment</li>
+    {%  endfor %}
+
+    </Table>
+{%  endblock %}
